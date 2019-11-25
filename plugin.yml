@@ -1,0 +1,14 @@
+name: LuckPerms-GUI
+main: me.AsVaidas.LuckPemsGUI.Main
+api-version: 1.14
+version: 2.6
+author: AsVaidas
+depend: [LuckPerms]
+permissions:
+  luckperms.gui:
+    description: GUI LuckPerms
+    default: op
+commands:
+   lpgui:
+      description: Opens LuckPerms GUI
+      usage: /<command>
