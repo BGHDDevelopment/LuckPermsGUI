@@ -186,7 +186,7 @@ public class EditGroup implements Listener {
 			// ----------------------- GENERAL ------------------------------
 			ItemStack general = Tools.button(Material.SIGN, "&6General", Arrays.asList("&e----------->"), 1);
 			ItemStack weight1 = Tools.button(Material.DIAMOND_BLOCK, "&6Set weight", Arrays.asList("&eClick to set group weight", "&cCurrent: &e"+weight), 1);
-			ItemStack displayname = Tools.button(Material.BOOK_AND_QUILL, "&6Set displayname", Arrays.asList("&eClick to set display name", "&cCurrent: &e"+group.getFriendlyName()), 1);
+			ItemStack displayname = Tools.button(Material.NAME_TAG, "&6Set displayname", Arrays.asList("&eClick to set display name", "&cCurrent: &e"+group.getFriendlyName()), 1);
 			ItemStack rename = Tools.button(Material.NAME_TAG, "&6Rename", Arrays.asList("&eClick to rename", "&cCurrent: &e"+group.getName()), 1);
 			ItemStack clone = Tools.button(Material.PAPER, "&6Clone", Arrays.asList("&eClick to clone"), 1);
 			ItemStack remove = Tools.button(Material.REDSTONE, "&6Remove group", Arrays.asList("&eRemove the group"), 1);

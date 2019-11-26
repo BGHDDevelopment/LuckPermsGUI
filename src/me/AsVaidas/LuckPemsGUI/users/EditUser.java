@@ -213,7 +213,7 @@ public class EditUser implements Listener {
 	
 
 	public static void openTracks(Player p, User user, String type) {
-		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA +"Select " + type); //+type+" "+user.getName()+" track");
+		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA + "Select " + type + " " + user.getName()); //+type+" "+user.getName()+" track");
 		Tools.onAsync(() -> {
 			ItemStack back = Tools.button(Material.BARRIER, "&6Back", Arrays.asList(""), 1);
 			myInventory.setItem(8, back);
@@ -244,11 +244,10 @@ public class EditUser implements Listener {
 			if (e.getView().getTitle().contains(ChatColor.AQUA + "Select")) {
 				e.setCancelled(true);
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-					String group = ChatColor.stripColor(inv.getName().split(" ")[0]); //default 2
+					String group = ChatColor.stripColor(inv.getName().split(" ")[2]); //default 2
 					User g = LuckPerms.getApi().getUser(group);
 					String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 					if (name.equals("Back")) {
-						//open(p, g);
 						UsersGUI.open(p);
 					} else {
 							String type = inv.getName().split(" ")[1];

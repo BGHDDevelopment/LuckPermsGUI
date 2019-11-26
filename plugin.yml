@@ -1,8 +1,7 @@
-name: LuckPerms-GUI
+name: LuckPermsGUI
 main: me.AsVaidas.LuckPemsGUI.Main
-api-version: 1.14
-version: 2.6
-author: AsVaidas
+version: 3.0
+author: BGHDDevelopment
 depend: [LuckPerms]
 permissions:
   luckperms.gui:
