@@ -244,13 +244,13 @@ public class EditUser implements Listener {
 			if (e.getView().getTitle().contains(ChatColor.AQUA + "Select")) {
 				e.setCancelled(true);
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
-					String group = ChatColor.stripColor(inv.getName().split(" ")[2]); //default 2
+					String group = ChatColor.stripColor(e.getView().getTitle().split(" ")[2]); //default 2
 					User g = LuckPerms.getApi().getUser(group);
 					String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 					if (name.equals("Back")) {
 						UsersGUI.open(p);
 					} else {
-							String type = inv.getName().split(" ")[1];
+							String type = e.getView().getTitle().split(" ")[1];
 							if (type.equalsIgnoreCase("promote")) {
 								Tools.sendCommand(p, "lp user "+g.getName()+" promote "+name);
 							} else if (type.equalsIgnoreCase("demote")) {
