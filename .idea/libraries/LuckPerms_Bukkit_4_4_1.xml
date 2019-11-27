@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="LuckPerms-Bukkit-4.4.1">
     <CLASSES>
-      <root url="jar://C:/SharedProjects/LuckPerms-Bukkit-4.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/LuckPermsDepend/LuckPerms-Bukkit-4.4.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
