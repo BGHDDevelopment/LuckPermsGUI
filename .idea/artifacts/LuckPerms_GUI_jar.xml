@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/../../Development</output-path>
     <root id="archive" name="LuckPerms-GUI.jar">
       <element id="module-output" name="LuckPerms-GUI" />
-      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
     </root>
   </artifact>
 </component>
