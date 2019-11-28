@@ -4,10 +4,9 @@ LuckPermsGUI is an add-on for the plugin LuckPerms which creates a GUI to edit t
 
 ## Normal Installation
 
-If you are not a developer, you can download LuckPermsGUI for free on SpigotMC!
+If you are not a developer, you can download LuckPermsGUI for free on [SpigotMC](https://www.spigotmc.org/resources/luckpermsgui.53460/)!  
 
-[Click Here](https://www.spigotmc.org/resources/luckpermsgui.53460/)
-
+You can find information on how to use the plugin on our [Wiki](https://wiki.bghddevelopment.com) website!
 ## Developer Installation
 
 If you are a developer, you can fork this project to make a custom version for your server!
@@ -16,7 +15,9 @@ If you are a developer, you can fork this project to make a custom version for y
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue or contact us on [Discord](https://bghddevelopment.com/discord) first to discuss what you would like to change.
 
-Please make sure to test changes as appropriate.
+Please make sure to test changes as appropriate.  
+
+To view user's suggestions check out our [Feedback](https://feedback.bghddevelopment.com) website!
 
 ## License
 We have decided to create a custom license for this project, please make sure to reach out to us if you have any questions regarding what you can and cannot do. 
