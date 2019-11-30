@@ -20,6 +20,7 @@ Please make sure to test changes as appropriate.
 To view user's suggestions check out our [Feedback](https://feedback.bghddevelopment.com) website!
 
 ## License
-License information can be found in the LICENSE.txt file.  
+License information can be found in the [LICENSE.md](LICENSE.md) file.  
+
 
 Any questions regarding this license can be asked on [Discord](https://bghddevelopment.com/discord) or messaged directly to [ceo@bghddevelopment.com](mailto:ceo@bghddevelopment.com).
