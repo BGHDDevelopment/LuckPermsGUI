@@ -11,9 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
-
-import me.lucko.luckperms.common.api.LuckPermsApiProvider;
-import me.lucko.luckperms.common.plugin.LuckPermsPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -24,10 +21,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.AsVaidas.LuckPemsGUI.users.Permissions;
 import me.lucko.luckperms.LuckPerms;
 import me.lucko.luckperms.api.Contexts;
 import me.lucko.luckperms.api.LuckPermsApi;

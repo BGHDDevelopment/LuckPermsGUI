@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -86,7 +87,7 @@ public class UsersGUI implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Back")) {
-							Main.openGUI(p);
+							OpenGUI.openGUI(p);
 						} else if (name.equals("Edit offline user")) {
 							Tools.sendMessage(p, "&eWrite in chat:");
 							Tools.sendMessage(p, "&8<&7Name&8>");

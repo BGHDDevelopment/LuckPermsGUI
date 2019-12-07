@@ -21,7 +21,8 @@ public class JoinEvents implements Listener {
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (p.hasPermission("luckpermsgui.update")) {
+        if (Main.plugin.getConfig().getBoolean("Update.Enabled") == true) {
+            if (p.hasPermission("luckpermsgui.update")) {
                 this.checker = new UpdateChecker(Main.plugin);
                 if (this.checker.isConnected()) {
                     if (this.checker.hasUpdate()) {
@@ -32,6 +33,7 @@ public class JoinEvents implements Listener {
                         p.sendMessage(ChatColor.GOLD + "Please Update Here: " + ChatColor.ITALIC + Settings.PLUGIN_URL);
                         p.sendMessage(ChatColor.GRAY + "****************************************************************");
                     }
+                }
             }
         }
     }

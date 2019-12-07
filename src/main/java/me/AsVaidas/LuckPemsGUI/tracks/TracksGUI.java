@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -81,7 +82,7 @@ public class TracksGUI implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						String group = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (group.equals("Back")) {
-							Main.openGUI(p);
+							OpenGUI.openGUI(p);
 						} else if (group.equals("New track")) {
 							Tools.sendMessage(p, "&eWrite in chat:");
 							Tools.sendMessage(p, "&8<&7Name&8>");
