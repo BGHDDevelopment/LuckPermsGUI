@@ -1,6 +1,6 @@
 #Created by BGHDDevelopment(Noodles)
 #Discord/Support: https://bghddevelopment.com/discord
-#Plugin Link: https://www.spigotmc.org/resources/
+#Plugin Link: https://www.spigotmc.org/resources/53460
 #Website: https://bghddevelopment.com
 #Wiki: https://wiki.bghddevelopment.com/books/luckpermsgui
 #Ideas/Feedback: https://feedback.bghddevelopment.com/
@@ -20,5 +20,5 @@ Update:
 #Please turn this setting to true if you are using LuckPerms 5+!
 #This will change some of the commands to work with the new version of LuckPerms.
 UseLuckPerms5:
-  Enabled: true
+  Enabled: false
 
