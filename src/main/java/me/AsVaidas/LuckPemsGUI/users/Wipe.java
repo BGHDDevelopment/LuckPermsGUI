@@ -7,10 +7,7 @@
 package me.AsVaidas.LuckPemsGUI.users;
 
 import java.util.Arrays;
-
 import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,7 +17,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
 import me.AsVaidas.LuckPemsGUI.Tools;
 import me.lucko.luckperms.LuckPerms;
 import me.lucko.luckperms.api.Group;

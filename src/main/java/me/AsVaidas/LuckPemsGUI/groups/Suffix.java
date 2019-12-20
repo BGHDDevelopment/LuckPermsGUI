@@ -9,7 +9,6 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -20,7 +19,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
 import me.lucko.luckperms.LuckPerms;

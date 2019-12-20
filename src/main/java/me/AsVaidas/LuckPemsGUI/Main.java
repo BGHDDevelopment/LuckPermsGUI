@@ -8,8 +8,6 @@ package me.AsVaidas.LuckPemsGUI;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-
 import me.AsVaidas.LuckPemsGUI.commands.LPGUICommand;
 import me.AsVaidas.LuckPemsGUI.events.Events;
 import me.AsVaidas.LuckPemsGUI.updatechecker.JoinEvents;
@@ -18,24 +16,11 @@ import me.AsVaidas.LuckPemsGUI.util.Logger;
 import me.AsVaidas.LuckPemsGUI.util.MetricsLite;
 import me.AsVaidas.LuckPemsGUI.util.Settings;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import me.AsVaidas.LuckPemsGUI.groups.EditGroup;
 import me.AsVaidas.LuckPemsGUI.groups.GroupsGUI;
 import me.AsVaidas.LuckPemsGUI.groups.Parents;
