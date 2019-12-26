@@ -11,3 +11,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 # Suggestions
 We do not require but we will ask that you do not remove "MetricsLite" or change the plugin.yml "name: LuckPermsGUI" so we are able to see usage stats.
+We also ask that you do not release a PAID version of this, and keep it free.
