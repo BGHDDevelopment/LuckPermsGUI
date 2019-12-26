@@ -173,11 +173,19 @@ public class Parents implements Listener {
 							for (Node permission : g.getPermissions()) {
 								if (!permission.isGroupNode()) continue;
 								if (sk == id) {
-									if (permission.isTemporary())
-										Tools.sendCommand(p, "lp user "+g.getName()+" unsettemp "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									else
-										Tools.sendCommand(p, "lp user "+g.getName()+" unset "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									break;
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled") == true) {
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp user " + g.getName() + " parent removetemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp user " + g.getName() + " parent remove " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									} else {
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp user " + g.getName() + " unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp user " + g.getName() + " unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									}
 								}
 								sk++;
 							}

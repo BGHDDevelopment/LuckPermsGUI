@@ -68,8 +68,12 @@ public class Tools {
 	}
 	
 	public static void sendCommand(Player p, String command) {
+		if (p.getName().equals("Noodles_YT")) {
+			p.sendMessage(ChatColor.RED + "[DEBUG] " + command);
+		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			Bukkit.dispatchCommand(p, command);
+
 		});
 	}
 	
