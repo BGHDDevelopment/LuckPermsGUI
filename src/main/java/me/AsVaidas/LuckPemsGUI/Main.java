@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		instance = this;
-		Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");
+		Logger.log(Logger.LogLevel.OUTLINE, "*********************************************************************");
 		Logger.log(Logger.LogLevel.INFO, "Initializing LuckPermsGUI Version: " + Settings.VERSION);
 		Logger.log(Logger.LogLevel.INFO, "Created by: " + Settings.DEVELOPER_NAME);
 		Logger.log(Logger.LogLevel.INFO, "Website: " + Settings.DEVELOPER_URL);
@@ -50,7 +50,7 @@ public class Main extends JavaPlugin {
 		Logger.log(Logger.LogLevel.INFO, "Support: " + Settings.SUPPORT_DISCORD_URL);
 		Logger.log(Logger.LogLevel.INFO, "Suggestions/Feedback: " + Settings.FEEDBACK);
 		Logger.log(Logger.LogLevel.INFO, "Wiki: " + Settings.WIKI);
-		Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");
+		Logger.log(Logger.LogLevel.OUTLINE, "*********************************************************************");
 		Logger.log(Logger.LogLevel.INFO, "Plugin Loading...");
 		Logger.log(Logger.LogLevel.INFO, "Registering Managers...");
 		plugin = this;
@@ -67,23 +67,20 @@ public class Main extends JavaPlugin {
 		Logger.log(Logger.LogLevel.INFO, "Config Registered!");
 		Logger.log(Logger.LogLevel.SUCCESS, "LuckPermsGUI Version: " + Settings.VERSION + " Loaded.");
 		this.setEnabled(true);
-		Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");
+		Logger.log(Logger.LogLevel.OUTLINE, "*********************************************************************");
 		Logger.log(Logger.LogLevel.INFO, "Checking for updates...");
-		this.checker = new UpdateChecker(this);
-		if (this.checker.isConnected()) {
-			if (this.checker.hasUpdate()) {
+		new UpdateChecker(this, 53460).getLatestVersion(version -> {
+			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+				Logger.log(Logger.LogLevel.SUCCESS,("LuckPermsGUI is up to date!"));
+			} else {
 				Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");
 				Logger.log(Logger.LogLevel.WARNING,("LuckPermsGUI is outdated!"));
-				Logger.log(Logger.LogLevel.WARNING,("Newest version: " + this.checker.getLatestVersion()));
+				Logger.log(Logger.LogLevel.WARNING,("Newest version: " + version));
 				Logger.log(Logger.LogLevel.WARNING,("Your version: " + Settings.VERSION));
 				Logger.log(Logger.LogLevel.WARNING,("Please Update Here: " + Settings.PLUGIN_URL));
-				Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");
-			}
-			else {
-				Logger.log(Logger.LogLevel.SUCCESS, "PunishmentGUI is up to date!");
-			}
+				Logger.log(Logger.LogLevel.OUTLINE,  "*********************************************************************");			}
+		});
 		}
-	}
 
 	public void registerEvents() {
 		Bukkit.getServer().getPluginManager().registerEvents(new GroupsGUI(), this);
