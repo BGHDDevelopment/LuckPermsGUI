@@ -25,7 +25,7 @@ public class JoinEvents implements Listener {
         Player p = e.getPlayer();
         if (Main.plugin.getConfig().getBoolean("Update.Enabled") == true) {
             if (p.hasPermission("luckpermsgui.update")) {
-                new UpdateChecker(plugin, 53460).getLatestVersion(version -> {
+                new UpdateChecker(Main.getPlugin(), 53460).getLatestVersion(version -> {
                     if (!Main.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
                         p.sendMessage(ChatColor.GRAY + "****************************************************************");
                         p.sendMessage(ChatColor.RED + "LuckPermsGUI is outdated!");

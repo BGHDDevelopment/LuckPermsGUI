@@ -128,6 +128,9 @@ public class Main extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
+	public static Main getPlugin() {
+		return plugin;
+	}
 
 	public static Plugin getInstance() {
 		return instance;
