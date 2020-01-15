@@ -7,7 +7,6 @@
 package me.AsVaidas.LuckPemsGUI;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -32,8 +31,7 @@ public class Tools {
 		item.setItemMeta(meta);
 		return item;
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	public static ItemStack head(String owner, String pavadinimas, List<String> lore, int amount) {
 		ItemStack item = new ItemStack(Material.SKULL_ITEM, amount);
 		SkullMeta meta = (SkullMeta) item.getItemMeta();
@@ -53,8 +51,7 @@ public class Tools {
 
 	public static int randInt(int min, int max) {
 	    Random rand = new Random();
-	    int randomNum = rand.nextInt((max - min) + 1) + min;
-	    return randomNum;
+	    return rand.nextInt((max - min) + 1) + min;
 	}
 	
 	public static void sendMessage(Player p, String message) {
@@ -75,23 +72,17 @@ public class Tools {
 		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			Bukkit.dispatchCommand(p, command);
-
 		});
 	}
 	
 	public static String contextConverter(ContextSet contextSet) {
-		String eilute = "";
-		
-		Iterator<Entry<String, String>> set = contextSet.toMultimap().entries().iterator();
-		while (set.hasNext()) {
-			Entry<String, String> next = set.next();
-			
-			if (eilute.equals(""))
-				eilute = next.getKey()+"="+next.getValue();
-			else
-				eilute += " "+next.getKey()+"="+next.getValue();
+		StringBuilder eilute = new StringBuilder();
+		for (Entry<String, String> entry : contextSet.toMultimap().entries()) {
+			if (eilute.length() != 0)
+				eilute.append(" ");
+			eilute.append(entry.getKey()).append("=").append(entry.getValue());
 		}
-		return eilute;
+		return eilute.toString();
 	}
 	
 	public static String getTime(long time) {
@@ -111,10 +102,7 @@ public class Tools {
 	}
 
 	public static boolean isOnline(String name) {
-		for (Player p : Bukkit.getOnlinePlayers())
-			if (p.getName().equals(name))
-				return true;
-		return false;
+		return Bukkit.getPlayerExact(name) != null;
 	}
 
 	public static void sendConsole(String string) {
