@@ -173,7 +173,7 @@ public class Parents implements Listener {
 							for (Node permission : g.getPermissions()) {
 								if (!permission.isGroupNode()) continue;
 								if (sk == id) {
-									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled") == true) {
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
 										if (permission.isTemporary())
 											Tools.sendCommand(p, "lp user " + g.getName() + " parent removetemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										else

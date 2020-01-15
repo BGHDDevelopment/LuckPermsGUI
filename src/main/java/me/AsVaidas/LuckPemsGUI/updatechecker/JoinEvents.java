@@ -22,7 +22,7 @@ public class JoinEvents implements Listener {
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (Main.plugin.getConfig().getBoolean("Update.Enabled") == true) {
+        if (Main.plugin.getConfig().getBoolean("Update.Enabled")) {
             if (p.hasPermission("luckpermsgui.update")) {
                 new UpdateChecker(Main.getPlugin(), 53460).getLatestVersion(version -> {
                     if (!Main.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {

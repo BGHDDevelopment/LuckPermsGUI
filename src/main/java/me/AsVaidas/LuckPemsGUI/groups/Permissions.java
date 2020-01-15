@@ -198,7 +198,7 @@ public class Permissions implements Listener {
 								if (permission.isMeta()) continue;
 								if (permission.getPermission().contains("weight")) continue;
 								if (sk == id) {
-									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled") == true) {
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
 										if (permission.isTemporary())
 											Tools.sendCommand(p, "lp group " + g.getName() + " permission unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										else
