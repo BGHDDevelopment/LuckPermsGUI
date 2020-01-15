@@ -29,7 +29,7 @@ public class UsersGUI implements Listener {
 
 	static LuckPermsApi l = LuckPerms.getApi();
 	
-	List<Player> editUser = new ArrayList<Player>();
+	List<Player> editUser = new ArrayList<>();
 
 	@EventHandler
 	public void onUserEdit(AsyncPlayerChatEvent e) {

@@ -29,8 +29,8 @@ import me.lucko.luckperms.api.Node;
 
 public class Suffix implements Listener {
 
-	public static Map<Player, User> addPrefix = new HashMap<Player, User>();
-	public static Map<Player, User> addTempPrefix = new HashMap<Player, User>();
+	public static Map<Player, User> addPrefix = new HashMap<>();
+	public static Map<Player, User> addTempPrefix = new HashMap<>();
 
 	@EventHandler
 	public void onaddParent(AsyncPlayerChatEvent e) {
@@ -95,27 +95,9 @@ public class Suffix implements Listener {
 		for (Node permission : user.getPermissions()) {
 			if (!permission.isSuffix()) continue;
 			if (from <= sk && sk < to) {
-				String expiration;
-				try {
-					expiration = Tools.getTime(permission.getExpiry().getTime());
-				} catch (Exception e) {
-					expiration = "Never";
-				}
-				
-				String server;
-				try {
-					server = permission.getServer().get();
-				} catch (Exception e) {
-					server = "global";
-				}
-				
-				String world;
-				try {
-					world = permission.getWorld().get();
-				} catch (Exception e) {
-					world = "global";
-				}
-				
+				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
+				String server = permission.getServer().orElse("global");
+				String world = permission.getWorld().orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+permission.getSuffix().getValue(),
 						Arrays.asList(
@@ -162,13 +144,13 @@ public class Suffix implements Listener {
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Next")) {
-							int current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+							int current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 							open(p, g, current+1);
 						} else if (name.equals("Back")) {
 							EditUser.open(p, g);
 						} else if (!name.equals("Info")) {
 							
-							int id = Integer.valueOf(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
+							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
 							for (Node permission : g.getPermissions()) {
@@ -185,7 +167,7 @@ public class Suffix implements Listener {
 								
 							int current = 0;
 							if (inv.getItem(53) != null)
-								current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+								current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

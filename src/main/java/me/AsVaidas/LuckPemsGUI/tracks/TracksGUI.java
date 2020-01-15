@@ -28,7 +28,7 @@ import me.lucko.luckperms.api.Track;
 
 public class TracksGUI implements Listener {
 
-	List<Player> newGroup = new ArrayList<Player>();
+	List<Player> newGroup = new ArrayList<>();
 	
 	@EventHandler
 	public void onGroupAdd(AsyncPlayerChatEvent e) {

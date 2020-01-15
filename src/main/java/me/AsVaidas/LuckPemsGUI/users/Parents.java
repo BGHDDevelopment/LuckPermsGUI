@@ -29,8 +29,8 @@ import me.lucko.luckperms.api.User;
 
 public class Parents implements Listener {
 
-	public static Map<Player, User> addParent = new HashMap<Player, User>();
-	public static Map<Player, User> addTempParent = new HashMap<Player, User>();
+	public static Map<Player, User> addParent = new HashMap<>();
+	public static Map<Player, User> addTempParent = new HashMap<>();
 
 	@EventHandler
 	public void onaddParent(AsyncPlayerChatEvent e) {
@@ -95,27 +95,9 @@ public class Parents implements Listener {
 		for (Node permission : user.getPermissions()) {
 			if (!permission.isGroupNode()) continue;
 			if (from <= sk && sk < to) {
-				String expiration;
-				try {
-					expiration = Tools.getTime(permission.getExpiry().getTime());
-				} catch (Exception e) {
-					expiration = "Never";
-				}
-				
-				String server;
-				try {
-					server = permission.getServer().get();
-				} catch (Exception e) {
-					server = "global";
-				}
-				
-				String world;
-				try {
-					world = permission.getWorld().get();
-				} catch (Exception e) {
-					world = "global";
-				}
-				
+				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
+				String server = permission.getServer().orElse("global");
+				String world = permission.getWorld().orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+permission.getGroupName(),
 						Arrays.asList(
@@ -161,19 +143,19 @@ public class Parents implements Listener {
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Next")) {
-							int current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+							int current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 							open(p, g, current+1);
 						} else if (name.equals("Back")) {
 							EditUser.open(p, g);
 						} else if (!name.equals("Info")) {
 							
-							int id = Integer.valueOf(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
+							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
 							for (Node permission : g.getPermissions()) {
 								if (!permission.isGroupNode()) continue;
 								if (sk == id) {
-									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled") == true) {
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
 										if (permission.isTemporary())
 											Tools.sendCommand(p, "lp user " + g.getName() + " parent removetemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										else
@@ -192,7 +174,7 @@ public class Parents implements Listener {
 								
 							int current = 0;
 							if (inv.getItem(53) != null)
-								current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+								current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {

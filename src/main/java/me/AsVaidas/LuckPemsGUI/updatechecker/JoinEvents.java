@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import sun.plugin2.main.server.Plugin;
 
 public class JoinEvents implements Listener {
 
@@ -23,7 +22,7 @@ public class JoinEvents implements Listener {
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if (Main.plugin.getConfig().getBoolean("Update.Enabled") == true) {
+        if (Main.plugin.getConfig().getBoolean("Update.Enabled")) {
             if (p.hasPermission("luckpermsgui.update")) {
                 new UpdateChecker(Main.getPlugin(), 53460).getLatestVersion(version -> {
                     if (!Main.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
@@ -42,7 +41,7 @@ public class JoinEvents implements Listener {
     @EventHandler
     public void onDevJoin(PlayerJoinEvent e) { //THIS EVENT IS USED FOR DEBUG REASONS ONLY!
         Player p = e.getPlayer();
-        if (p.getName().equals("Noodles_YT")) {
+        if (p.getUniqueId().equals(Settings.DEVELOPER_UUID)) {
             p.sendMessage(ChatColor.RED + "BGHDDevelopment Debug Message");
             p.sendMessage(" ");
             p.sendMessage(ChatColor.GREEN + "This server is using " + Settings.NAME + " version " + Settings.VERSION);
