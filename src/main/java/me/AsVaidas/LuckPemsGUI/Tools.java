@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
+
+import me.AsVaidas.LuckPemsGUI.util.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -60,7 +62,7 @@ public class Tools {
 	}
 
 	public static void debug(String key) {
-		Bukkit.getPlayer("Noodles_YT").sendMessage(key);
+		Bukkit.getPlayer(Settings.DEVELOPER_UUID).sendMessage(key);
 	}
 	
 	public static void onAsync(Runnable runnable) {
@@ -68,7 +70,7 @@ public class Tools {
 	}
 	
 	public static void sendCommand(Player p, String command) {
-		if (p.getName().equals("Noodles_YT")) {
+		if (p.getUniqueId().equals(Settings.DEVELOPER_UUID)) {
 			p.sendMessage(ChatColor.RED + "[DEBUG] " + command);
 		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {

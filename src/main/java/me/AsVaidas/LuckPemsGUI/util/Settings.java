@@ -6,8 +6,11 @@
 
 package me.AsVaidas.LuckPemsGUI.util;
 
+import java.util.UUID;
+
 public class Settings {
 
+    public static UUID DEVELOPER_UUID = UUID.fromString("c0e4ce9d-9d0b-472c-962c-e3b0e401da4e");
     public static String DEVELOPER_NAME = "BGHDDevelopment";
     public static String DEVELOPER_URL = "https://bghddevelopment.com";
     public static String PLUGIN_URL = "https://spigotmc.org/resources/53460";
