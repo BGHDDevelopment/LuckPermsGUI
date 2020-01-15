@@ -69,12 +69,7 @@ public class Suffix implements Listener {
 
 		
 		// ----------------------- INFO ------------------------------
-		int weight = 0;
-		try {
-			weight = group.getWeight().getAsInt();
-		} catch (Exception e) {
-			weight = 0;
-		}
+		int weight = group.getWeight().orElse(0);
 		ItemStack info = Tools.button(Material.ARMOR_STAND,
 				"&6Info",
 				Arrays.asList(
@@ -98,27 +93,9 @@ public class Suffix implements Listener {
 		for (Node permission : group.getPermissions()) {
 			if (!permission.isSuffix()) continue;
 			if (from <= sk && sk < to) {
-				String expiration;
-				try {
-					expiration = Tools.getTime(permission.getExpiry().getTime());
-				} catch (Exception e) {
-					expiration = "Never";
-				}
-				
-				String server;
-				try {
-					server = permission.getServer().get();
-				} catch (Exception e) {
-					server = "global";
-				}
-				
-				String world;
-				try {
-					world = permission.getWorld().get();
-				} catch (Exception e) {
-					world = "global";
-				}
-				
+				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
+				String server = permission.getServer().orElse("global");
+				String world = permission.getWorld().orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+permission.getSuffix().getValue(),
 						Arrays.asList(

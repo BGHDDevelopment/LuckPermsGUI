@@ -98,12 +98,7 @@ public class EditGroup implements Listener {
 		Tools.onAsync(() -> {
 			
 			// ----------------------- INFO ------------------------------
-			int weight = 0;
-			try {
-				weight = group.getWeight().getAsInt();
-			} catch (Exception e) {
-				weight = 0;
-			}
+			int weight = group.getWeight().orElse(0);
 			ItemStack info = Tools.button(Material.ARMOR_STAND,
 					"&6Info",
 					Arrays.asList(

@@ -113,27 +113,9 @@ public class Permissions implements Listener {
 			if (permission.isMeta()) continue;
 			if (permission.getPermission().contains("weight")) continue;
 			if (from <= sk && sk < to) {
-				String expiration;
-				try {
-					expiration = Tools.getTime(permission.getExpiry().getTime());
-				} catch (Exception e) {
-					expiration = "Never";
-				}
-				
-				String server;
-				try {
-					server = permission.getServer().get();
-				} catch (Exception e) {
-					server = "global";
-				}
-				
-				String world;
-				try {
-					world = permission.getWorld().get();
-				} catch (Exception e) {
-					world = "global";
-				}
-				
+				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
+				String server = permission.getServer().orElse("global");
+				String world = permission.getWorld().orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+permission.getPermission(),
 						Arrays.asList(
