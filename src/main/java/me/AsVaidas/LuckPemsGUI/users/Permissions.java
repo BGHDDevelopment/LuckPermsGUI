@@ -29,9 +29,9 @@ import me.lucko.luckperms.api.User;
 
 public class Permissions implements Listener {
 
-	public static Map<Player, User> addPermission = new HashMap<Player, User>();
-	public static Map<Player, User> addTempPermission = new HashMap<Player, User>();
-	public static Map<Player, User> checkIfHas = new HashMap<Player, User>();
+	public static Map<Player, User> addPermission = new HashMap<>();
+	public static Map<Player, User> addTempPermission = new HashMap<>();
+	public static Map<Player, User> checkIfHas = new HashMap<>();
 	
 	@EventHandler
 	public void onPermissionAdd(AsyncPlayerChatEvent e) {

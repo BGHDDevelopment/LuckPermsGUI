@@ -30,10 +30,10 @@ import me.lucko.luckperms.api.LuckPermsApi;
 
 public class EditGroup implements Listener {
 
-	public static Map<Player, Group> setWeight = new HashMap<Player, Group>();
-	public static Map<Player, Group> setName = new HashMap<Player, Group>();
-	public static Map<Player, Group> rename = new HashMap<Player, Group>();
-	public static Map<Player, Group> clone = new HashMap<Player, Group>();
+	public static Map<Player, Group> setWeight = new HashMap<>();
+	public static Map<Player, Group> setName = new HashMap<>();
+	public static Map<Player, Group> rename = new HashMap<>();
+	public static Map<Player, Group> clone = new HashMap<>();
 	static LuckPermsApi l = LuckPerms.getApi();
 	
 	@EventHandler

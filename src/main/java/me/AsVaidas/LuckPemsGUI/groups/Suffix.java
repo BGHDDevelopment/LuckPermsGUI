@@ -29,8 +29,8 @@ import me.lucko.luckperms.api.Node;
 
 public class Suffix implements Listener {
 
-	public static Map<Player, Group> addPrefix = new HashMap<Player, Group>();
-	public static Map<Player, Group> addTempPrefix = new HashMap<Player, Group>();
+	public static Map<Player, Group> addPrefix = new HashMap<>();
+	public static Map<Player, Group> addTempPrefix = new HashMap<>();
 
 	@EventHandler
 	public void onaddParent(AsyncPlayerChatEvent e) {

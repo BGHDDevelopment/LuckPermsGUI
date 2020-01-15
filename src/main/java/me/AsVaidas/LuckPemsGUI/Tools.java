@@ -43,7 +43,7 @@ public class Tools {
 	}
 	
 	private static List<String> ctranslate(List<String> lore) {
-		List<String> lore2 = new ArrayList<String>();
+		List<String> lore2 = new ArrayList<>();
 		for (String eilute : lore)
 			lore2.add(ChatColor.translateAlternateColorCodes('&', eilute));
 		return lore2;

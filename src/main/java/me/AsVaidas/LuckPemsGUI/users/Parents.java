@@ -29,8 +29,8 @@ import me.lucko.luckperms.api.User;
 
 public class Parents implements Listener {
 
-	public static Map<Player, User> addParent = new HashMap<Player, User>();
-	public static Map<Player, User> addTempParent = new HashMap<Player, User>();
+	public static Map<Player, User> addParent = new HashMap<>();
+	public static Map<Player, User> addTempParent = new HashMap<>();
 
 	@EventHandler
 	public void onaddParent(AsyncPlayerChatEvent e) {

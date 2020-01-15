@@ -31,10 +31,10 @@ import me.lucko.luckperms.api.User;
 
 public class EditUser implements Listener {
 
-	public static Map<Player, User> primarygroup = new HashMap<Player, User>();
-	public static Map<Player, User> clone = new HashMap<Player, User>();
-	public static Map<Player, User> promote = new HashMap<Player, User>();
-	public static Map<Player, User> demote = new HashMap<Player, User>();
+	public static Map<Player, User> primarygroup = new HashMap<>();
+	public static Map<Player, User> clone = new HashMap<>();
+	public static Map<Player, User> promote = new HashMap<>();
+	public static Map<Player, User> demote = new HashMap<>();
 	static LuckPermsApi l = LuckPerms.getApi();
 
 	

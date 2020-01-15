@@ -27,10 +27,10 @@ import me.lucko.luckperms.api.Track;
 
 public class EditTrack implements Listener {
 
-	public static Map<Player, Track> addgroup = new HashMap<Player, Track>();
-	public static Map<Player, Track> insertgroup = new HashMap<Player, Track>();
-	public static Map<Player, Track> rename = new HashMap<Player, Track>();
-	public static Map<Player, Track> clone = new HashMap<Player, Track>();
+	public static Map<Player, Track> addgroup = new HashMap<>();
+	public static Map<Player, Track> insertgroup = new HashMap<>();
+	public static Map<Player, Track> rename = new HashMap<>();
+	public static Map<Player, Track> clone = new HashMap<>();
 	static LuckPermsApi l = LuckPerms.getApi();
 	
 	@EventHandler
