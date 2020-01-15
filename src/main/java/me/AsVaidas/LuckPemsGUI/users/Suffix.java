@@ -162,13 +162,13 @@ public class Suffix implements Listener {
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Next")) {
-							int current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+							int current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 							open(p, g, current+1);
 						} else if (name.equals("Back")) {
 							EditUser.open(p, g);
 						} else if (!name.equals("Info")) {
 							
-							int id = Integer.valueOf(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
+							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
 							for (Node permission : g.getPermissions()) {
@@ -185,7 +185,7 @@ public class Suffix implements Listener {
 								
 							int current = 0;
 							if (inv.getItem(53) != null)
-								current = Integer.valueOf(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
+								current = Integer.parseInt(ChatColor.stripColor(inv.getItem(53).getItemMeta().getLore().get(1).split(" ")[1]));
 
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
