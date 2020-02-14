@@ -153,11 +153,19 @@ public class Prefix implements Listener {
 							for (Node permission : g.getPermissions()) {
 								if (!permission.isPrefix()) continue;
 								if (sk == id) {
-									if (permission.isTemporary())
-										Tools.sendCommand(p, "lp group "+g.getName()+" unsettemp "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									else
-										Tools.sendCommand(p, "lp group "+g.getName()+" unset "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									break;
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									} else {
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp group " + g.getName() + " unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp group " + g.getName() + " unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									}
 								}
 								sk++;
 							}
