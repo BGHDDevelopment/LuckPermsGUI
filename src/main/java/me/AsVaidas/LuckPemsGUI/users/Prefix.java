@@ -156,11 +156,20 @@ public class Prefix implements Listener {
 							for (Node permission : g.getPermissions()) {
 								if (!permission.isPrefix()) continue;
 								if (sk == id) {
-									if (permission.isTemporary())
-										Tools.sendCommand(p, "lp user "+g.getName()+" unsettemp "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									else
-										Tools.sendCommand(p, "lp user "+g.getName()+" unset "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
-									break;
+									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
+										Map.Entry<Integer, String> prefix = permission.getPrefix();
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp user " + g.getName() + " meta removetempprefix " + prefix.getKey() + " " + '"' + prefix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp user " + g.getName() + " meta removeprefix " + prefix.getKey() + " " + '"' + prefix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									} else {
+										if (permission.isTemporary())
+											Tools.sendCommand(p, "lp user " + g.getName() + " unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										else
+											Tools.sendCommand(p, "lp user " + g.getName() + " unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+										break;
+									}
 								}
 								sk++;
 							}

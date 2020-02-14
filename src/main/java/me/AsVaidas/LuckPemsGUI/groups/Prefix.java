@@ -154,10 +154,11 @@ public class Prefix implements Listener {
 								if (!permission.isPrefix()) continue;
 								if (sk == id) {
 									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
+										Map.Entry<Integer, String> prefix = permission.getPrefix();
 										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempprefix " + prefix.getKey() + " " + '"' + prefix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										else
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta removeprefix " + prefix.getKey() + " " + '"' + prefix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										break;
 									} else {
 										if (permission.isTemporary())

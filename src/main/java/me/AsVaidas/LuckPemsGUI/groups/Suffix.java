@@ -155,10 +155,11 @@ public class Suffix implements Listener {
 								if (!permission.isSuffix()) continue;
 								if (sk == id) {
 									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
+										Map.Entry<Integer, String> suffix = permission.getSuffix();
 										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempsuffix " + suffix.getKey() + " " + '"' + suffix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										else
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
+											Tools.sendCommand(p, "lp group " + g.getName() + " meta removesuffix " + suffix.getKey() + " " + '"' + suffix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
 										break;
 									} else {
 										if (permission.isTemporary())
