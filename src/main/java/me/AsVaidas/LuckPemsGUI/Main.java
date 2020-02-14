@@ -49,6 +49,7 @@ public class Main extends JavaPlugin {
 			registerEvents();
 			registerCommands();
 			this.setEnabled(true);
+			Logger.log(Logger.LogLevel.SUCCESS, "LuckPermsGUI Version: " + Settings.VERSION + " Loaded.");
 			if (getConfig().getBoolean("CheckForUpdates.Enabled")) {
 				new UpdateChecker(this, 53460).getLatestVersion(version -> {
 					if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
