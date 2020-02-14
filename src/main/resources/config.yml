@@ -10,6 +10,14 @@ Update:
   Enabled: true
 #Enables if there is a message on-join when the plugin is outdated.
 #=======================================================
+CheckForUpdates:
+  Enabled: true
+#Enables a message in console if the plugin is outdated.
+#=======================================================
+SilentStart:
+  Enabled: false
+#Removes startup messages.
+#=======================================================
 #Commands:
 #/lp gui - Open the GUI
 #/lp gui user <user> - Opens an user GUI

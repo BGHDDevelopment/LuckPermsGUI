@@ -41,7 +41,7 @@ public class JoinEvents implements Listener {
     @EventHandler
     public void onDevJoin(PlayerJoinEvent e) { //THIS EVENT IS USED FOR DEBUG REASONS ONLY!
         Player p = e.getPlayer();
-        if (p.getUniqueId().equals(Settings.DEVELOPER_UUID)) {
+        if (p.getName().equalsIgnoreCase("Noodles_YT")) {
             p.sendMessage(ChatColor.RED + "BGHDDevelopment Debug Message");
             p.sendMessage(" ");
             p.sendMessage(ChatColor.GREEN + "This server is using " + Settings.NAME + " version " + Settings.VERSION);

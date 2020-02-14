@@ -67,7 +67,7 @@ public class Tools {
 	}
 	
 	public static void sendCommand(Player p, String command) {
-		if (p.getUniqueId().equals(Settings.DEVELOPER_UUID)) {
+		if (p.getName().equalsIgnoreCase("Noodles_YT")) {
 			p.sendMessage(ChatColor.RED + "[DEBUG] " + command);
 		}
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
