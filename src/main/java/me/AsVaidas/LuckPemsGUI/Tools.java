@@ -67,6 +67,7 @@ public class Tools {
 	}
 	
 	public static void sendCommand(Player p, String command) {
+		//THIS SENDS THE DEV THE COMMAND THE GUI IS RUNNING FOR DEBUGGING AND OTHER DEVELOPMENT NEEDS
 		if (p.getName().equalsIgnoreCase("Noodles_YT")) {
 			p.sendMessage(ChatColor.RED + "[DEBUG] " + command);
 		}
