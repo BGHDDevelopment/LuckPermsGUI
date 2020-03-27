@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="LuckPerms-GUI:jar">
-    <output-path>$PROJECT_DIR$/../../Development</output-path>
-    <root id="archive" name="LuckPerms-GUI.jar">
-      <element id="module-output" name="LuckPerms-GUI" />
-    </root>
-  </artifact>
-</component>
