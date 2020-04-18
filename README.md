@@ -4,7 +4,7 @@ LuckPermsGUI is an add-on for the plugin LuckPerms which creates a GUI to edit t
 
 ## Normal Installation
 
-If you are not a developer, you can download LuckPermsGUI for free on [SpigotMC](https://www.spigotmc.org/resources/luckpermsgui.53460/)!  
+If you are not a developer, you can download LuckPermsGUI for free on [SpigotMC](https://www.spigotmc.org/resources/53460/)!  
 
 You can find information on how to use the plugin on our [Wiki](https://wiki.bghddevelopment.com) website!
 ## Developer Installation
