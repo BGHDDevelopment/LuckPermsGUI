@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  -
+    about: "Discord Support for BGHDDevelopment Plugins."
+    name: "BGHD Discord"
+    url: "https://bghddevelopment.com/discord/"
+  -
+    about: "Feature Requests for BGHDDevelopment Plugins."
+    name: "BGHD Feedback"
+    url: "https://feedback.bghddevelopment.com/"
+  -
+    about: "Wiki for BGHDDevelopment Plugins."
+    name: "BGHD Wiki"
+    url: "https://wiki.bghddevelopment.com/"
