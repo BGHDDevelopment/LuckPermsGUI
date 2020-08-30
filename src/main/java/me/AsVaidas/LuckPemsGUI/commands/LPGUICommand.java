@@ -10,9 +10,10 @@ import me.AsVaidas.LuckPemsGUI.groups.EditGroup;
 import me.AsVaidas.LuckPemsGUI.tracks.EditTrack;
 import me.AsVaidas.LuckPemsGUI.users.EditUser;
 import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Track;
-import me.lucko.luckperms.api.User;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.track.Track;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,6 +24,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class LPGUICommand implements CommandExecutor, Listener {
+
+    static LuckPerms l = LuckPermsProvider.get();
 
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -49,11 +52,11 @@ public class LPGUICommand implements CommandExecutor, Listener {
                         sm(sender, "&cUsage: &e/lpgui user/group <user/group>");
                 if (args.length == 2)
                     if (args[0].equals("group")) {
-                        EditGroup.open(p, LuckPerms.getApi().getGroup(args[1]));
+                        EditGroup.open(p, l.getGroupManager().getGroup(args[1]));
                     } else if (args[0].equals("user")) {
                         EditUser.open(p, args[1]);
                     } else if (args[0].equals("track")) {
-                        Track user = LuckPerms.getApi().getTrack(args[1]);
+                        Track user = l.getTrackManager().getTrack(args[1]);
                         EditTrack.open(p, user);
                     } else
                         sm(sender, "&cUsage: &e/lpgui user/group/track <user/group/track>");
@@ -86,12 +89,12 @@ public class LPGUICommand implements CommandExecutor, Listener {
                     sm(sender, "&cUsage: &e/lp gui user/group <user/group>");
             if (args.length == 4)
                 if (args[2].equals("group")) {
-                    EditGroup.open(p, LuckPerms.getApi().getGroup(args[3]));
+                    EditGroup.open(p, l.getGroupManager().getGroup(args[3]));
                 } else if (args[2].equals("user")) {
-                    User user = LuckPerms.getApi().getUser(args[3]);
+                    User user = l.getUserManager().getUser(args[3]);
                     EditUser.open(p, user);
                 } else if (args[2].equals("track")) {
-                    Track user = LuckPerms.getApi().getTrack(args[3]);
+                    Track user = l.getTrackManager().getTrack(args[3]);
                     EditTrack.open(p, user);
                 } else
                     sm(sender, "&cUsage: &e/lp gui user/group <user/group>");

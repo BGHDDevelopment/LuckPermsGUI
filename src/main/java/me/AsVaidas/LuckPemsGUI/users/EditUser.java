@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
+
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.track.Track;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,11 +28,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.Track;
-import me.lucko.luckperms.api.User;
 
 public class EditUser implements Listener {
 
@@ -35,7 +35,7 @@ public class EditUser implements Listener {
 	public static Map<Player, User> clone = new HashMap<>();
 	public static Map<Player, User> promote = new HashMap<>();
 	public static Map<Player, User> demote = new HashMap<>();
-	static LuckPermsApi l = LuckPerms.getApi();
+	static LuckPerms l = LuckPermsProvider.get();
 
 	
 	@EventHandler
@@ -62,7 +62,7 @@ public class EditUser implements Listener {
 		clone.remove(e.getPlayer());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			open(e.getPlayer(), l.getUser(message));
+			open(e.getPlayer(), l.getUserManager().getUser(message));
 		}, 3);
 		e.setCancelled(true);
 	}
@@ -222,7 +222,7 @@ public class EditUser implements Listener {
 			myInventory.setItem(8, back);
 			
 			int i = 9;
-			for (Track track : l.getTracks()) {
+			for (Track track : l.getTrackManager().getLoadedTracks()) {
 
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+track.getName(),
@@ -248,7 +248,7 @@ public class EditUser implements Listener {
 				e.setCancelled(true);
 				if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
 					String group = ChatColor.stripColor(e.getView().getTitle().split(" ")[2]); //default 2
-					User g = LuckPerms.getApi().getUser(group);
+					User g = l.getUserManager().getUser(group);
 					String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 					if (name.equals("Back")) {
 						UsersGUI.open(p);
@@ -278,7 +278,7 @@ public class EditUser implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						
 						String group = ChatColor.stripColor(inv.getItem(4).getItemMeta().getLore().get(0).split(" ")[1]);
-						User g = LuckPerms.getApi().getUser(group);
+						User g = l.getUserManager().getUser(group);
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Back")) {
@@ -432,7 +432,7 @@ public class EditUser implements Listener {
 				e.printStackTrace();
 			}
 		} else
-			open(player, l.getUser(message));
+			open(player, l.getUserManager().getUser(message));
 	}
 	
 }

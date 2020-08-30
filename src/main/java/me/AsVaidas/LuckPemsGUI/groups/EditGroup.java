@@ -10,6 +10,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,10 +26,6 @@ import org.bukkit.inventory.ItemStack;
 
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
-import me.lucko.luckperms.api.Group;
-import me.lucko.luckperms.api.LuckPermsApi;
 
 public class EditGroup implements Listener {
 
@@ -34,7 +33,7 @@ public class EditGroup implements Listener {
 	public static Map<Player, Group> setName = new HashMap<>();
 	public static Map<Player, Group> rename = new HashMap<>();
 	public static Map<Player, Group> clone = new HashMap<>();
-	static LuckPermsApi l = LuckPerms.getApi();
+	static LuckPerms l = LuckPermsProvider.get();
 	
 	@EventHandler
 	public void onsetWeight(AsyncPlayerChatEvent e) {
@@ -87,7 +86,7 @@ public class EditGroup implements Listener {
 		Tools.sendCommand(e.getPlayer(), "lp group "+g.getName()+" clone "+message);
 		clone.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-			open(e.getPlayer(), l.getGroup(message));
+			open(e.getPlayer(), l.getGroupManager().getGroup(message));
 		}, 3);
 		e.setCancelled(true);
 	}
@@ -219,7 +218,7 @@ public class EditGroup implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						
 						String group = ChatColor.stripColor(inv.getItem(4).getItemMeta().getLore().get(0).split(" ")[2]);
-						Group g = LuckPerms.getApi().getGroup(group);
+						Group g = l.getGroupManager().getGroup(group);
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Back")) {

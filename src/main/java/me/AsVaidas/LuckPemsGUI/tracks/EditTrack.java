@@ -9,6 +9,10 @@ package me.AsVaidas.LuckPemsGUI.tracks;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.track.Track;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,9 +25,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.Track;
 
 public class EditTrack implements Listener {
 
@@ -31,7 +32,7 @@ public class EditTrack implements Listener {
 	public static Map<Player, Track> insertgroup = new HashMap<>();
 	public static Map<Player, Track> rename = new HashMap<>();
 	public static Map<Player, Track> clone = new HashMap<>();
-	static LuckPermsApi l = LuckPerms.getApi();
+	static LuckPerms l = LuckPermsProvider.get();
 	
 	@EventHandler
 	public void onGroupAdd(AsyncPlayerChatEvent e) {
@@ -149,7 +150,7 @@ public class EditTrack implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						
 						String group = ChatColor.stripColor(inv.getItem(4).getItemMeta().getLore().get(0).split(" ")[1]);
-						Track g = LuckPerms.getApi().getTrack(group);
+						Track g = l.getTrackManager().getTrack(group);
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Back")) {

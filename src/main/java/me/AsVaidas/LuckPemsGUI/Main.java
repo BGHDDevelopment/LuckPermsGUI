@@ -10,8 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import me.AsVaidas.LuckPemsGUI.commands.LPGUICommand;
 import me.AsVaidas.LuckPemsGUI.events.Events;
-import me.AsVaidas.LuckPemsGUI.updatechecker.JoinEvents;
-import me.AsVaidas.LuckPemsGUI.updatechecker.UpdateChecker;
+import me.AsVaidas.LuckPemsGUI.util.Metrics;
+import me.AsVaidas.LuckPemsGUI.util.updatechecker.JoinEvents;
+import me.AsVaidas.LuckPemsGUI.util.updatechecker.UpdateChecker;
 import me.AsVaidas.LuckPemsGUI.util.Logger;
 import me.AsVaidas.LuckPemsGUI.util.MetricsLite;
 import me.AsVaidas.LuckPemsGUI.util.Settings;
@@ -45,7 +46,7 @@ public class Main extends JavaPlugin {
 		if (getConfig().getBoolean("SilentStart.Enabled")) {
 			instance = this;
 			plugin = this;
-			MetricsLite metrics = new MetricsLite(this);
+			Metrics metrics = new Metrics(this, 5970);
 			registerEvents();
 			registerCommands();
 			this.setEnabled(true);
@@ -79,7 +80,7 @@ public class Main extends JavaPlugin {
 			Logger.log(Logger.LogLevel.INFO, "Plugin Loading...");
 			Logger.log(Logger.LogLevel.INFO, "Registering Managers...");
 			plugin = this;
-			MetricsLite metrics = new MetricsLite(this);
+			Metrics metrics = new Metrics(this, 5970);
 			Logger.log(Logger.LogLevel.INFO, "Managers Registered!");
 			Logger.log(Logger.LogLevel.INFO, "Registering Listeners...");
 			registerEvents();

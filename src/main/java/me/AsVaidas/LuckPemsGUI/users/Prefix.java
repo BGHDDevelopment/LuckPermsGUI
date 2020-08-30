@@ -9,6 +9,11 @@ package me.AsVaidas.LuckPemsGUI.users;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,11 +26,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.Node;
-import me.lucko.luckperms.api.User;
 
 public class Prefix implements Listener {
 
@@ -59,8 +59,8 @@ public class Prefix implements Listener {
 		});
 		e.setCancelled(true);
 	}
-	
-	static LuckPermsApi l = LuckPerms.getApi();
+
+	static LuckPerms l = LuckPermsProvider.get();
 
 	public static void open(Player p, User user, int page) {
 		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA+"LuckPerms user prefixs");
@@ -140,7 +140,7 @@ public class Prefix implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						
 						String group = ChatColor.stripColor(inv.getItem(4).getItemMeta().getLore().get(0).split(" ")[1]);
-						User g = LuckPerms.getApi().getUser(group);
+						User g = l.getUserManager().getUser(group);
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Next")) {

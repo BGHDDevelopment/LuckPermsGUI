@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,9 +25,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Group;
-import me.lucko.luckperms.api.LuckPermsApi;
 
 public class GroupsGUI implements Listener {
 	
@@ -42,15 +42,15 @@ public class GroupsGUI implements Listener {
 		}, 5);
 		e.setCancelled(true);
 	}
-	
-	static LuckPermsApi l = LuckPerms.getApi();
+
+	static LuckPerms l = LuckPermsProvider.get();
 
 	public static void open(Player p) {
 		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA+"LuckPerms groups");
 		Tools.onAsync(() -> {
 		
 		int sk = 9;
-		for (Group group : l.getGroups()) {
+		for (Group group : l.getGroupManager().getLoadedGroups()) {
 			String name = group.getName();
 			ItemStack item = Tools.button(Material.TNT, "&6"+name, Arrays.asList("&ePress to edit this group"), 1);
 			myInventory.setItem(sk, item);
@@ -87,7 +87,7 @@ public class GroupsGUI implements Listener {
 							Tools.sendMessage(p, "&aName - Group name");
 							newGroup.add(p);
 							p.closeInventory();
-						} else EditGroup.open(p, LuckPerms.getApi().getGroup(group));
+						} else EditGroup.open(p, l.getGroupManager().getGroup(group));
 					}
 			}
 	}

@@ -4,7 +4,7 @@
  * If you have any questions please email ceo@bghddevelopment or reach us on Discord
  */
 
-package me.AsVaidas.LuckPemsGUI.updatechecker;
+package me.AsVaidas.LuckPemsGUI.util.updatechecker;
 
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.util.Settings;

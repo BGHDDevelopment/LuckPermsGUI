@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import java.util.Random;
 
 import me.AsVaidas.LuckPemsGUI.util.Settings;
+import net.luckperms.api.context.ContextSet;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -19,7 +20,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import me.lucko.luckperms.api.context.ContextSet;
 
 public class Tools {
 

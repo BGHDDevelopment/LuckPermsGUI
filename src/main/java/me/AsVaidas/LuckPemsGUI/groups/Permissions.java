@@ -9,6 +9,11 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.group.Group;
+import net.luckperms.api.node.Node;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,11 +26,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.Contexts;
-import me.lucko.luckperms.api.Group;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.Node;
 
 public class Permissions implements Listener {
 
@@ -74,8 +74,8 @@ public class Permissions implements Listener {
 		}, 5);
 		e.setCancelled(true);
 	}
-	
-	static LuckPermsApi l = LuckPerms.getApi();
+
+	static LuckPerms l = LuckPermsProvider.get();
 
 	public static void open(Player p, Group group, int page) {
 		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA+"LuckPerms group permissions");
@@ -155,7 +155,7 @@ public class Permissions implements Listener {
 					if (item.getItemMeta().hasDisplayName()) {
 						
 						String group = ChatColor.stripColor(inv.getItem(4).getItemMeta().getLore().get(0).split(" ")[2]);
-						Group g = LuckPerms.getApi().getGroup(group);
+						Group g =l.getGroupManager().getGroup(group);
 						
 						String name = ChatColor.stripColor(item.getItemMeta().getDisplayName());
 						if (name.equals("Next")) {

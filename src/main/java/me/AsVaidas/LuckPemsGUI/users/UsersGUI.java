@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,12 +24,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.LuckPermsApi;
 
 public class UsersGUI implements Listener {
 
-	static LuckPermsApi l = LuckPerms.getApi();
+	static LuckPerms l = LuckPermsProvider.get();
 	
 	List<Player> editUser = new ArrayList<>();
 
@@ -94,7 +94,7 @@ public class UsersGUI implements Listener {
 							p.closeInventory();
 						} else if (name.equals("Remove ranks")) {
 							Wipe.open(p);
-						} else EditUser.open(p, LuckPerms.getApi().getUser(name));
+						} else EditUser.open(p, l.getUserManager().getUser(name));
 					}
 			}
 	}

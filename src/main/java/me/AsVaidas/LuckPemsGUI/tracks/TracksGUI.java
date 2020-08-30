@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import me.AsVaidas.LuckPemsGUI.util.OpenGUI;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.track.Track;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,9 +25,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import me.AsVaidas.LuckPemsGUI.Main;
 import me.AsVaidas.LuckPemsGUI.Tools;
-import me.lucko.luckperms.LuckPerms;
-import me.lucko.luckperms.api.LuckPermsApi;
-import me.lucko.luckperms.api.Track;
 
 public class TracksGUI implements Listener {
 
@@ -42,15 +42,15 @@ public class TracksGUI implements Listener {
 		}, 5);
 		e.setCancelled(true);
 	}
-	
-	static LuckPermsApi l = LuckPerms.getApi();
+
+	static LuckPerms l = LuckPermsProvider.get();
 
 	public static void open(Player p) {
 		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA+"LuckPerms tracks");
 		Tools.onAsync(() -> {
 		
 		int sk = 9;
-		for (Track group : l.getTracks()) {
+		for (Track group : l.getTrackManager().getLoadedTracks()) {
 			String name = group.getName();
 			ItemStack item = Tools.button(Material.TNT, "&6"+name, Arrays.asList("&ePress to edit this track"), 1);
 			myInventory.setItem(sk, item);
@@ -87,7 +87,7 @@ public class TracksGUI implements Listener {
 							Tools.sendMessage(p, "&aName - Track name");
 							newGroup.add(p);
 							p.closeInventory();
-						} else EditTrack.open(p, LuckPerms.getApi().getTrack(group));
+						} else EditTrack.open(p, l.getTrackManager().getTrack(group));
 					}
 			}
 	}
