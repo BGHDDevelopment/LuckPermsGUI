@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.track.Track;
 import org.bukkit.Bukkit;
@@ -44,11 +45,11 @@ public class EditUser implements Listener {
 		String message = e.getMessage();
 		User g = primarygroup.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" parent set "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" parent set "+message);
 		primarygroup.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -58,12 +59,12 @@ public class EditUser implements Listener {
 		String message = e.getMessage();
 		User g = clone.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" clone "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" clone "+message);
 		clone.remove(e.getPlayer());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), l.getUserManager().getUser(message));
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -73,12 +74,12 @@ public class EditUser implements Listener {
 		String message = e.getMessage();
 		User g = promote.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" promote "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" promote "+message);
 		promote.remove(e.getPlayer());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -89,12 +90,12 @@ public class EditUser implements Listener {
 		String message = e.getMessage();
 		User g = demote.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" demote "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" demote "+message);
 		demote.remove(e.getPlayer());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -105,17 +106,17 @@ public class EditUser implements Listener {
 			ItemStack info = Tools.button(Material.ARMOR_STAND,
 					"&6Info",
 					Arrays.asList(
-							"&cName: &e"+user.getName(),
-							"&cUUID: &e"+user.getUuid(),
+							"&cName: &e"+user.getUsername(),
+							"&cUUID: &e"+user.getUniqueId(),
 							"&cGroup: &e"+user.getPrimaryGroup(),
 							"&cCounts:",
 							"&c   Nodes: &e"+user.getNodes().size(),
-							"&c   Permissions: &e"+user.getPermissions().size(),
-							"&c   Prefixes: &e"+user.getCachedData().getMetaData(Contexts.global()).getPrefixes().size(),
-							"&c   Suffixes: &e"+user.getCachedData().getMetaData(Contexts.global()).getSuffixes().size(),
+							"&c   Permissions: &e"+user.getDistinctNodes().size(),
+							"&c   Prefixes: &e"+user.getCachedData().getMetaData().getPrefixes().size(),
+							"&c   Suffixes: &e"+user.getCachedData().getMetaData().getSuffixes().size(),
 							"&cCached data:",
-							"&c   Current prefix: &e"+user.getCachedData().getMetaData(Contexts.global()).getPrefix(),
-							"&c   Current suffix: &e"+user.getCachedData().getMetaData(Contexts.global()).getSuffix()
+							"&c   Current prefix: &e"+user.getCachedData().getMetaData().getPrefix(),
+							"&c   Current suffix: &e"+user.getCachedData().getMetaData().getSuffix()
 							),
 					1);
 			myInventory.setItem(4, info);
@@ -213,10 +214,9 @@ public class EditUser implements Listener {
 		});
 		p.openInventory(myInventory);
 	}
-	
 
 	public static void openTracks(Player p, User user, String type) {
-		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA + "Select " + type + " " + user.getName()); //+type+" "+user.getName()+" track");
+		Inventory myInventory = Bukkit.createInventory(null, 54, ChatColor.AQUA + "Select " + type + " " + user.getUsername()); //+type+" "+user.getName()+" track");
 		Tools.onAsync(() -> {
 			ItemStack back = Tools.button(Material.BARRIER, "&6Back", Arrays.asList(""), 1);
 			myInventory.setItem(8, back);
@@ -227,7 +227,7 @@ public class EditUser implements Listener {
 				ItemStack item = Tools.button(Material.TNT,
 						"&6"+track.getName(),
 						Arrays.asList(
-								"&cGroups: &e"+track.getSize()
+								"&cGroups: &e"+track.getGroups().size()
 								), 1);
 				myInventory.setItem(i, item);
 				
@@ -255,9 +255,9 @@ public class EditUser implements Listener {
 					} else {
 							String type = e.getView().getTitle().split(" ")[1];
 							if (type.equalsIgnoreCase("promote")) {
-								Tools.sendCommand(p, "lp user "+g.getName()+" promote "+name);
+								Tools.sendCommand(p, "lp user "+g.getUsername()+" promote "+name);
 							} else if (type.equalsIgnoreCase("demote")) {
-								Tools.sendCommand(p, "lp user "+g.getName()+" demote "+name);
+								Tools.sendCommand(p, "lp user "+g.getUsername()+" demote "+name);
 							}
 						}
 					}

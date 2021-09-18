@@ -45,7 +45,7 @@ public class EditGroup implements Listener {
 		setWeight.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -59,7 +59,7 @@ public class EditGroup implements Listener {
 		setName.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -73,7 +73,7 @@ public class EditGroup implements Listener {
 		rename.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -87,7 +87,7 @@ public class EditGroup implements Listener {
 		clone.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), l.getGroupManager().getGroup(message));
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -106,9 +106,9 @@ public class EditGroup implements Listener {
 							"&cWeight: &e"+weight,
 							"&cCounts:",
 							"   &cNodes: &e"+group.getNodes().size(),
-							"   &cPermissions: &e"+group.getPermissions().size(),
-							"   &cPrefixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getPrefixes().size(),
-							"   &cSuffixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getSuffixes().size()),
+							"   &cPermissions: &e"+group.getDistinctNodes().size(),
+							"   &cPrefixes: &e"+group.getCachedData().getMetaData().getPrefixes().size(),
+							"   &cSuffixes: &e"+group.getCachedData().getMetaData().getSuffixes().size()),
 					1);
 			myInventory.setItem(4, info);
 			// ----------------------- INFO ------------------------------
@@ -368,7 +368,7 @@ public class EditGroup implements Listener {
 							Tools.sendCommand(p, "lp deletegroup "+g.getName());
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								GroupsGUI.open(p);
-							}, 3);
+							}, 5);
 						}
 					}
 			}

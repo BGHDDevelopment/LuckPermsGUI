@@ -9,11 +9,15 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -78,9 +82,9 @@ public class Suffix implements Listener {
 						"&cWeight: &e"+weight,
 						"&cCounts:",
 						"  &cNodes: &e"+group.getNodes().size(),
-						"  &cPermissions: &e"+group.getPermissions().size(),
-						"  &cPrefixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getPrefixes().size(),
-						"  &cSuffixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getSuffixes().size()),
+						"  &cPermissions: &e"+group.getDistinctNodes().size(),
+						"  &cPrefixes: &e"+group.getCachedData().getMetaData().getPrefixes().size(),
+						"  &cSuffixes: &e"+group.getCachedData().getMetaData().getSuffixes().size()),
 				1);
 		myInventory.setItem(4, info);
 		// ----------------------- INFO ------------------------------
@@ -90,17 +94,17 @@ public class Suffix implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : group.getPermissions()) {
-			if (!permission.isSuffix()) continue;
+		for (Node permission : group.getNodes()) {
+			if (permission.getType() != NodeType.SUFFIX) continue;
 			if (from <= sk && sk < to) {
-				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
-				String server = permission.getServer().orElse("global");
-				String world = permission.getWorld().orElse("global");
+				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
+				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getSuffix().getValue(),
+						"&6"+permission.getKey(),
 						Arrays.asList(
 								"&cID: &e"+sk,
-								"&cPosition: &e"+permission.getSuffix().getKey(),
+								"&cPosition: &e"+permission.getKey(),
 								"&cExpires in: &e"+expiration,
 								"&cValue: &e"+permission.getValue(),
 								"&cServer: &e"+server,
@@ -151,23 +155,19 @@ public class Suffix implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getPermissions()) {
-								if (!permission.isSuffix()) continue;
+							for (Node permission : g.getNodes()) {
+								if (permission.getType() == NodeType.SUFFIX) continue;
 								if (sk == id) {
-									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
-										Map.Entry<Integer, String> suffix = permission.getSuffix();
-										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempsuffix " + suffix.getKey() + " " + '"' + suffix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										else
-											Tools.sendCommand(p, "lp group " + g.getName() + " meta removesuffix " + suffix.getKey() + " " + '"' + suffix.getValue() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										break;
-									} else {
-										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp group " + g.getName() + " unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										else
-											Tools.sendCommand(p, "lp group " + g.getName() + " unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										break;
-									}
+									Map.Entry<Integer, String> suffix = permission.getSuffix(); // Doesn't exist in API v5
+
+									String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+									String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
+
+									if (permission.hasExpiry())
+										Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempsuffix " + suffix.getValue() + " " + '"' + suffix.getKey() + '"' + " " + server + " " + world);
+									else
+										Tools.sendCommand(p, "lp group " + g.getName() + " meta removesuffix " + suffix.getValue() + " " + '"' + suffix.getKey() + '"' + " " + server + " " + world);
+									break;
 								}
 								sk++;
 							}

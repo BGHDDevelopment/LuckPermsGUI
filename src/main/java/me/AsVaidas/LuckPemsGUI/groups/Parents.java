@@ -9,11 +9,19 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.context.ContextSet;
+import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.metadata.NodeMetadataKey;
+import net.luckperms.api.node.types.ChatMetaNode;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -77,9 +85,9 @@ public class Parents implements Listener {
 						"&cWeight: &e"+weight,
 						"&cCounts:",
 						"  &cNodes: &e"+group.getNodes().size(),
-						"  &cPermissions: &e"+group.getPermissions().size(),
-						"  &cPrefixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getPrefixes().size(),
-						"  &cSuffixes: &e"+group.getCachedData().getMetaData(Contexts.global()).getSuffixes().size()),
+						"  &cPermissions: &e"+group.getDistinctNodes().size(),
+						"  &cPrefixes: &e"+group.getCachedData().getMetaData().getPrefixes().size(),
+						"  &cSuffixes: &e"+group.getCachedData().getMetaData().getSuffixes().size()),
 				1);
 		myInventory.setItem(4, info);
 		// ----------------------- INFO ------------------------------
@@ -89,14 +97,16 @@ public class Parents implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : group.getPermissions()) {
-			if (!permission.isGroupNode()) continue;
+		for (Node permission : group.getNodes()) {
+			if (permission.getType() == NodeType.META) continue;
 			if (from <= sk && sk < to) {
-				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
-				String server = permission.getServer().orElse("global");
-				String world = permission.getWorld().orElse("global");
+
+
+				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
+				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getGroupName(),
+						"&6"+group.getName(),
 						Arrays.asList(
 								"&cID: &e"+sk,
 								"&cExpires in: &e"+expiration,
@@ -149,13 +159,17 @@ public class Parents implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getPermissions()) {
-								if (!permission.isGroupNode()) continue;
+							for (Node permission : g.getNodes()) {
+								if (permission.getType() == NodeType.META) continue;
+
+								String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+								String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
+
 								if (sk == id) {
-									if (permission.isTemporary())
-										Tools.sendCommand(p, "lp group "+g.getName()+" unsettemp "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
+									if (permission.hasExpiry())
+										Tools.sendCommand(p, "lp group "+g.getName()+" parent removetemp "+'"'+permission.getKey()+'"'+" "+server+" "+world);
 									else
-										Tools.sendCommand(p, "lp group "+g.getName()+" unset "+'"'+permission.getPermission()+'"'+" "+Tools.contextConverter(permission.getFullContexts()));
+										Tools.sendCommand(p, "lp group "+g.getName()+" parent remove "+'"'+permission.getKey()+'"'+" "+server+" "+world);
 									break;
 								}
 								sk++;

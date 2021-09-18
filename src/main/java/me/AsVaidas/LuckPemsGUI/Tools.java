@@ -75,10 +75,11 @@ public class Tools {
 			Bukkit.dispatchCommand(p, command);
 		});
 	}
-	
+
+	// Not usable doesn't send the correct context's anymore
 	public static String contextConverter(ContextSet contextSet) {
 		StringBuilder eilute = new StringBuilder();
-		for (Entry<String, String> entry : contextSet.toMultimap().entries()) {
+		for (Entry<String, String> entry : contextSet.toFlattenedMap().entrySet()) {
 			if (eilute.length() != 0)
 				eilute.append(" ");
 			eilute.append(entry.getKey()).append("=").append(entry.getValue());

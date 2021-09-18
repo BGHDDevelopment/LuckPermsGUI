@@ -9,11 +9,15 @@ package me.AsVaidas.LuckPemsGUI.users;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -39,7 +43,7 @@ public class Permissions implements Listener {
 		String message = e.getMessage();
 		User g = addPermission.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" permission set "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" permission set "+message);
 		addPermission.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
@@ -53,7 +57,7 @@ public class Permissions implements Listener {
 		String message = e.getMessage();
 		User g = addTempPermission.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" permission settemp "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" permission settemp "+message);
 		addTempPermission.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
@@ -67,7 +71,7 @@ public class Permissions implements Listener {
 		String message = e.getMessage();
 		User g = checkIfHas.get(e.getPlayer());
 		
-		Tools.sendCommand(e.getPlayer(), "lp user "+g.getName()+" permission check "+message);
+		Tools.sendCommand(e.getPlayer(), "lp user "+g.getUsername()+" permission check "+message);
 		checkIfHas.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
@@ -85,17 +89,17 @@ public class Permissions implements Listener {
 		ItemStack info = Tools.button(Material.ARMOR_STAND,
 				"&6Info",
 				Arrays.asList(
-						"&cName: &e"+user.getName(),
-						"&cUUID: &e"+user.getUuid(),
+						"&cName: &e"+user.getUsername(),
+						"&cUUID: &e"+user.getUniqueId(),
 						"&cGroup: &e"+user.getPrimaryGroup(),
 						"&cCounts:",
 						"&c   Nodes: &e"+user.getNodes().size(),
-						"&c   Permissions: &e"+user.getPermissions().size(),
-						"&c   Prefixes: &e"+user.getCachedData().getMetaData(Contexts.global()).getPrefixes().size(),
-						"&c   Suffixes: &e"+user.getCachedData().getMetaData(Contexts.global()).getSuffixes().size(),
+						"&c   Permissions: &e"+user.getDistinctNodes().size(),
+						"&c   Prefixes: &e"+user.getCachedData().getMetaData().getPrefixes().size(),
+						"&c   Suffixes: &e"+user.getCachedData().getMetaData().getSuffixes().size(),
 						"&cCached data:",
-						"&c   Current prefix: &e"+user.getCachedData().getMetaData(Contexts.global()).getPrefix(),
-						"&c   Current suffix: &e"+user.getCachedData().getMetaData(Contexts.global()).getSuffix()
+						"&c   Current prefix: &e"+user.getCachedData().getMetaData().getPrefix(),
+						"&c   Current suffix: &e"+user.getCachedData().getMetaData().getSuffix()
 						),
 				1);
 		myInventory.setItem(4, info);
@@ -106,18 +110,18 @@ public class Permissions implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : user.getPermissions()) {
-			if (permission.isGroupNode()) continue;
-			if (permission.isPrefix()) continue;
-			if (permission.isSuffix()) continue;
-			if (permission.isMeta()) continue;
-			if (permission.getPermission().contains("weight")) continue;
+		for (Node permission : user.getNodes()) {
+			if (permission.getType() == NodeType.META) continue;
+			if (permission.getType() == NodeType.PREFIX) continue;
+			if (permission.getType() == NodeType.SUFFIX) continue;
+			if (permission.getType() == NodeType.CHAT_META) continue;
+			if (permission.getType() == NodeType.WEIGHT) continue;
 			if (from <= sk && sk < to) {
-				String expiration = permission.isTemporary() ? Tools.getTime(permission.getExpiry().getTime()) : "Never";
-				String server = permission.getServer().orElse("global");
-				String world = permission.getWorld().orElse("global");
+				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
+				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getPermission(),
+						"&6"+permission.getKey(),
 						Arrays.asList(
 								"&cID: &e"+sk,
 								"&cExpires in: &e"+expiration,
@@ -170,26 +174,21 @@ public class Permissions implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getPermissions()) {
-								if (permission.isGroupNode()) continue;
-								if (permission.isPrefix()) continue;
-								if (permission.isSuffix()) continue;
-								if (permission.isMeta()) continue;
-								if (permission.getPermission().contains("weight")) continue;
+							for (Node permission : g.getNodes()) {
+								if (permission.getType() == NodeType.META) continue;
+								if (permission.getType() == NodeType.PREFIX) continue;
+								if (permission.getType() == NodeType.SUFFIX) continue;
+								if (permission.getType() == NodeType.CHAT_META) continue;
+								if (permission.getType() == NodeType.WEIGHT) continue;
 								if (sk == id) {
-									if (Main.plugin.getConfig().getBoolean("UseLuckPerms5.Enabled")) {
-										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp user " + g.getName() + " permission unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										else
-											Tools.sendCommand(p, "lp user " + g.getName() + " permission unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										break;
-									} else {
-										if (permission.isTemporary())
-											Tools.sendCommand(p, "lp user " + g.getName() + " unsettemp " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										else
-											Tools.sendCommand(p, "lp user " + g.getName() + " unset " + '"' + permission.getPermission() + '"' + " " + Tools.contextConverter(permission.getFullContexts()));
-										break;
-									}
+									String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
+									String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
+
+									if (permission.hasExpiry())
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " permission unsettemp " + '"' + permission.getKey() + '"' + " " + server + " " + world);
+									else
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " permission unset " + '"' + permission.getKey() + '"' + " " + server + " " + world);
+									break;
 								}
 								sk++;
 							}
@@ -201,7 +200,7 @@ public class Permissions implements Listener {
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								open(p, g, page);
-							}, 3);
+							}, 5);
 						}
 					}
 			}
