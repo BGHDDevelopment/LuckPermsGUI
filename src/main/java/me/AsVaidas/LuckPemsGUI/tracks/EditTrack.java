@@ -44,7 +44,7 @@ public class EditTrack implements Listener {
 		addgroup.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -58,7 +58,7 @@ public class EditTrack implements Listener {
 		insertgroup.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -72,7 +72,7 @@ public class EditTrack implements Listener {
 		rename.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -86,7 +86,7 @@ public class EditTrack implements Listener {
 		clone.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -98,7 +98,7 @@ public class EditTrack implements Listener {
 					"&6Info",
 					Arrays.asList(
 							"&cName: &e"+group.getName(),
-							"&cAll groups: &e"+group.getSize()),
+							"&cAll groups: &e"+group.getGroups().size()),
 					1);
 			myInventory.setItem(4, info);
 			// ----------------------- INFO ------------------------------
@@ -175,7 +175,7 @@ public class EditTrack implements Listener {
 							Tools.sendCommand(p, "lp deletetrack "+g.getName());
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								TracksGUI.open(p);
-							}, 3);
+							}, 5);
 						} else if (name.equals("Rename")) {
 							Tools.sendMessage(p, "&eWrite in chat:");
 							Tools.sendMessage(p, "&8<&7Name&8>");
@@ -192,7 +192,7 @@ public class EditTrack implements Listener {
 							Tools.sendCommand(p, "lp track "+g.getName()+" remove "+ChatColor.stripColor(item.getItemMeta().getDisplayName()));
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								open(p, g);
-							}, 3);
+							}, 5);
 						}
 					}
 			}

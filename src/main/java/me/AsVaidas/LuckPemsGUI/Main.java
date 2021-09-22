@@ -14,7 +14,6 @@ import me.AsVaidas.LuckPemsGUI.util.Metrics;
 import me.AsVaidas.LuckPemsGUI.util.updatechecker.JoinEvents;
 import me.AsVaidas.LuckPemsGUI.util.updatechecker.UpdateChecker;
 import me.AsVaidas.LuckPemsGUI.util.Logger;
-import me.AsVaidas.LuckPemsGUI.util.MetricsLite;
 import me.AsVaidas.LuckPemsGUI.util.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
