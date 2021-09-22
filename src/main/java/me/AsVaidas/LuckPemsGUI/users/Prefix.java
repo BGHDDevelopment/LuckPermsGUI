@@ -6,23 +6,15 @@
 
 package me.AsVaidas.LuckPemsGUI.users;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.cacheddata.CachedMetaData;
-import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.PrefixNode;
-import net.luckperms.api.query.QueryMode;
-import net.luckperms.api.query.QueryOptions;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -51,7 +43,7 @@ public class Prefix implements Listener {
 		addPrefix.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -65,7 +57,7 @@ public class Prefix implements Listener {
 		addTempPrefix.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -104,14 +96,15 @@ public class Prefix implements Listener {
 		for (Node permission : user.getDistinctNodes()) {
 			if (permission.getType() != NodeType.PREFIX) continue;
 			if (from <= sk && sk < to) {
+				PrefixNode prefix = ((PrefixNode) permission);
 				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
 				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getKey(),
+						"&6"+prefix.getMetaValue(),
 						Arrays.asList(
 								"&cID: &e"+sk,
-								"&cPosition: &e"+permission.getKey(),
+								"&cPosition: &e"+prefix.getPriority(),
 								"&cExpires in: &e"+expiration,
 								"&cValue: &e"+permission.getValue(),
 								"&cServer: &e"+server,
@@ -163,17 +156,17 @@ public class Prefix implements Listener {
 
 							int sk = 0;
 							for (Node permission : g.getDistinctNodes()) {
-								if (permission.getType() == NodeType.PREFIX) continue;
+								if (permission.getType() != NodeType.PREFIX) continue;
 								if (sk == id) {
-									Map.Entry<Integer, String> prefix = permission.getPrefix(); // Doesn't exist in API v5
+									PrefixNode prefix = ((PrefixNode) permission);
 
 									String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 									String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 
 									if (permission.hasExpiry())
-										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removetempprefix " + prefix.getValue() + " " + '"' + prefix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removetempprefix " + prefix.getPriority() + " " + '"' + prefix.getMetaValue() + '"' + " " + server + " " + world);
 									else
-										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removeprefix " + prefix.getValue() + " " + '"' + prefix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removeprefix " + prefix.getPriority() + " " + '"' + prefix.getMetaValue() + '"' + " " + server + " " + world);
 									break;
 								}
 								sk++;

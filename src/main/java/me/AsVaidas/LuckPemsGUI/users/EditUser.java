@@ -14,7 +14,6 @@ import java.util.concurrent.ExecutionException;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.context.ContextManager;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.track.Track;
 import org.bukkit.Bukkit;

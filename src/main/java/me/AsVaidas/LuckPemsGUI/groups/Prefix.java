@@ -9,7 +9,6 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -17,7 +16,7 @@ import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.node.types.PrefixNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -93,17 +92,18 @@ public class Prefix implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : group.getNodes()) {
-			if (permission.getType() == NodeType.PREFIX) continue;
+		for (Node permission : group.getDistinctNodes()) {
+			if (permission.getType() != NodeType.PREFIX) continue;
 			if (from <= sk && sk < to) {
+				PrefixNode prefix = ((PrefixNode) permission);
 				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
 				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getKey(),
+						"&6"+prefix.getMetaValue(),
 						Arrays.asList(
 								"&cID: &e"+sk,
-								"&cPosition: &e"+permission.getKey(),
+								"&cPosition: &e"+prefix.getPriority(),
 								"&cExpires in: &e"+expiration,
 								"&cValue: &e"+permission.getValue(),
 								"&cServer: &e"+server,
@@ -154,18 +154,18 @@ public class Prefix implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getNodes()) {
+							for (Node permission : g.getDistinctNodes()) {
 								if (permission.getType() != NodeType.PREFIX) continue;
 								if (sk == id) {
-									Map.Entry<Integer, String> prefix = permission.getPrefix(); // Doesn't exist in API v5
+									PrefixNode prefix = ((PrefixNode) permission);
 
 									String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 									String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 
 									if (permission.hasExpiry())
-										Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempprefix " + prefix.getValue() + " " + '"' + prefix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp group " + g.getName() + " meta removetempprefix " + prefix.getPriority() + " " + '"' + prefix.getMetaValue() + '"' + " " + server + " " + world);
 									else
-										Tools.sendCommand(p, "lp group " + g.getName() + " meta removeprefix " + prefix.getValue() + " " + '"' + prefix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp group " + g.getName() + " meta removeprefix " + prefix.getPriority() + " " + '"' + prefix.getMetaValue() + '"' + " " + server + " " + world);
 									break;
 								}
 								sk++;
@@ -178,7 +178,7 @@ public class Prefix implements Listener {
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								open(p, g, page);
-							}, 3);
+							}, 5);
 						}
 					}
 			}

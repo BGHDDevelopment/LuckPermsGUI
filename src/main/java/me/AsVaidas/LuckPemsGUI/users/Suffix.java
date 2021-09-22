@@ -9,7 +9,6 @@ package me.AsVaidas.LuckPemsGUI.users;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -17,7 +16,7 @@ import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -46,7 +45,7 @@ public class Suffix implements Listener {
 		addPrefix.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -60,7 +59,7 @@ public class Suffix implements Listener {
 		addTempPrefix.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -96,17 +95,18 @@ public class Suffix implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : user.getNodes()) {
+		for (Node permission : user.getDistinctNodes()) {
 			if (permission.getType() != NodeType.SUFFIX) continue;
 			if (from <= sk && sk < to) {
+				SuffixNode suffix = ((SuffixNode) permission);
 				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
 				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 				String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 				ItemStack item = Tools.button(Material.TNT,
-						"&6"+permission.getKey(),
+						"&6"+suffix.getMetaValue(),
 						Arrays.asList(
 								"&cID: &e"+sk,
-								"&cPosition: &e"+permission.getKey(),
+								"&cPosition: &e"+suffix.getPriority(),
 								"&cExpires in: &e"+expiration,
 								"&cValue: &e"+permission.getValue(),
 								"&cServer: &e"+server,
@@ -157,18 +157,18 @@ public class Suffix implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getNodes()) {
-								if (permission.getType() == NodeType.SUFFIX) continue;
+							for (Node permission : g.getDistinctNodes()) {
+								if (permission.getType() != NodeType.SUFFIX) continue;
 								if (sk == id) {
-									Map.Entry<Integer, String> suffix = permission.getSuffix(); // Doesn't exist in API v5
+									SuffixNode suffix = ((SuffixNode) permission);
 
 									String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 									String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");
 
 									if (permission.hasExpiry())
-										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removetempsuffix " + suffix.getValue() + " " + '"' + suffix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removetempsuffix " + suffix.getPriority() + " " + '"' + suffix.getMetaValue() + '"' + " " + server + " " + world);
 									else
-										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removesuffix " + suffix.getValue() + " " + '"' + suffix.getKey() + '"' + " " + server + " " + world);
+										Tools.sendCommand(p, "lp user " + g.getUsername() + " meta removesuffix " + suffix.getPriority() + " " + '"' + suffix.getMetaValue() + '"' + " " + server + " " + world);
 									break;
 								}
 								sk++;

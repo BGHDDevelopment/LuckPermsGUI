@@ -9,7 +9,6 @@ package me.AsVaidas.LuckPemsGUI.users;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -17,7 +16,6 @@ import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -46,7 +44,7 @@ public class Parents implements Listener {
 		addParent.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -60,7 +58,7 @@ public class Parents implements Listener {
 		addTempParent.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), g);
-		});
+		}, 5);
 		e.setCancelled(true);
 	}
 
@@ -96,8 +94,8 @@ public class Parents implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : user.getNodes()) {
-			if (permission.getType() == NodeType.META) continue;
+		for (Node permission : user.getDistinctNodes()) {
+			if (permission.getType() != NodeType.META) continue;
 			if (from <= sk && sk < to) {
 				String expiration = permission.hasExpiry() ? Tools.getTime(permission.getExpiry().toEpochMilli()) : "Never";
 				String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
@@ -156,8 +154,8 @@ public class Parents implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getNodes()) {
-								if (permission.getType() == NodeType.META) continue;
+							for (Node permission : g.getDistinctNodes()) {
+								if (permission.getType() != NodeType.META) continue;
 
 								String server = permission.getContexts().getAnyValue(DefaultContextKeys.SERVER_KEY).orElse("global");
 								String world = permission.getContexts().getAnyValue(DefaultContextKeys.WORLD_KEY).orElse("global");

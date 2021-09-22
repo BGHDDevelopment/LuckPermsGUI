@@ -9,7 +9,6 @@ package me.AsVaidas.LuckPemsGUI.groups;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -17,7 +16,6 @@ import net.luckperms.api.context.DefaultContextKeys;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -108,7 +106,7 @@ public class Permissions implements Listener {
 		
 		int from = 45*page-1;
 		int to = 45*(page+1)-1;
-		for (Node permission : group.getNodes()) {
+		for (Node permission : group.getDistinctNodes()) {
 			if (permission.getType() == NodeType.META) continue;
 			if (permission.getType() == NodeType.PREFIX) continue;
 			if (permission.getType() == NodeType.SUFFIX) continue;
@@ -172,7 +170,7 @@ public class Permissions implements Listener {
 							int id = Integer.parseInt(ChatColor.stripColor(item.getItemMeta().getLore().get(0).split(" ")[1]));
 
 							int sk = 0;
-							for (Node permission : g.getNodes()) {
+							for (Node permission : g.getDistinctNodes()) {
 								if (permission.getType() == NodeType.META) continue;
 								if (permission.getType() == NodeType.PREFIX) continue;
 								if (permission.getType() == NodeType.SUFFIX) continue;
@@ -199,7 +197,7 @@ public class Permissions implements Listener {
 							int page = current;
 							Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
 								open(p, g, page);
-							}, 3);
+							}, 5);
 						}
 					}
 			}

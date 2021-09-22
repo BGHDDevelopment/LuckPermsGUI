@@ -44,7 +44,7 @@ public class EditTrack implements Listener {
 		addgroup.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -58,7 +58,7 @@ public class EditTrack implements Listener {
 		insertgroup.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	
@@ -72,7 +72,7 @@ public class EditTrack implements Listener {
 		rename.remove(e.getPlayer());
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			open(e.getPlayer(), g);
-		}, 3);
+		}, 5);
 		e.setCancelled(true);
 	}
 	

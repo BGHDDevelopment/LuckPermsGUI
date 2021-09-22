@@ -39,7 +39,7 @@ public class UsersGUI implements Listener {
 
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
 			EditUser.open(e.getPlayer(), message);
-		});
+		}, 5);
 			
 		e.setCancelled(true);
 	}
