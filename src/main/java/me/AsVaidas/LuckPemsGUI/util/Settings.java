@@ -18,6 +18,6 @@ public class Settings {
     public static String SUPPORT_DISCORD_URL = "https://bghddevelopment.com/discord";
     public static String FEEDBACK = "https://feedback.bghddevelopment.com";
     public static String WIKI = "https://wiki.bghddevelopment.com";
-    public static String VERSION = "4.1";
+    public static String VERSION = "4.2";
     public static String NAME = "LuckPermsGUI";
 }
