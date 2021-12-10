@@ -1,6 +1,6 @@
 name: LuckPermsGUI
 main: me.AsVaidas.LuckPemsGUI.Main
-version: 4.1
+version: 4.2
 author: BGHDDevelopment
 website: https://bghddevelopment.com
 depend: [LuckPerms]
