@@ -8,8 +8,6 @@ If you are not a developer, you can download LuckPermsGUI for free on [SpigotMC]
 
 You can find information on how to use the plugin on our [Wiki](https://wiki.bghddevelopment.com) website!
 
-When using LuckPerms4 just drag and drop the resource into the plugins folder. If your using LuckPerms5 make sure to install the legacy extension! There will be an error if you do not install this extension and the resource will not work. Please check this before asking for support.
-
 ## Developer Installation
 
 If you are a developer, you can fork this project to make a custom version for your server!
