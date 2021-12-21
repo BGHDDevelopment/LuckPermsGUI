@@ -39,7 +39,6 @@ public class LuckPermsGUI extends JavaPlugin {
 
 	@Getter
 	private static Plugin instance;
-	private UpdateChecker checker;
 	public static LuckPermsGUI plugin;
 
 	@Override
@@ -112,7 +111,7 @@ public class LuckPermsGUI extends JavaPlugin {
 
 	public void registerEvents() {
 		Bukkit.getServer().getPluginManager().registerEvents(new GroupsGUI(), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new JoinEvents(), this);
+		Bukkit.getServer().getPluginManager().registerEvents(new JoinEvents(plugin), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new EditGroup(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Permissions(), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Parents(), this);

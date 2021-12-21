@@ -14,8 +14,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinEvents implements Listener {
-
     private LuckPermsGUI plugin;
+
+    public JoinEvents(LuckPermsGUI plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onJoin(final PlayerJoinEvent e) {
@@ -23,7 +26,7 @@ public class JoinEvents implements Listener {
         if (plugin.getConfig().getBoolean("Update.Enabled")) {
             if (player.hasPermission("luckpermsgui.update")) {
                 new UpdateChecker(plugin, 53460).getLatestVersion(version -> {
-                    if (!LuckPermsGUI.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
+                    if (! plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
                         player.sendMessage(ChatColor.GRAY + "****************************************************************");
                         player.sendMessage(ChatColor.RED + "LuckPermsGUI is outdated!");
                         player.sendMessage(ChatColor.RED + "Newest version: " + version);
@@ -36,7 +39,6 @@ public class JoinEvents implements Listener {
         }
     }
 
-
     @EventHandler
     public void onDevJoin(PlayerJoinEvent e) { //THIS EVENT IS USED FOR DEBUG REASONS ONLY!
         Player player = e.getPlayer();
@@ -47,6 +49,4 @@ public class JoinEvents implements Listener {
             player.sendMessage(" ");
         }
     }
-
 }
-    
