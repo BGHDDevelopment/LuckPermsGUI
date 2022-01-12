@@ -4,6 +4,7 @@ version: 4.5
 author: BGHDDevelopmentLLC
 website: https://bghddevelopment.com
 depend: [LuckPerms]
+api-version: 1.18
 permissions:
   luckperms.gui:
     description: GUI LuckPerms
